@@ -130,3 +130,7 @@ print("Current Working Directory:", os.getcwd())
 os.chdir(r"C:\Users\steve\OneDrive\桌面\PittMDS_DCC")
 print("New Working Directory:", os.getcwd())
 # %%
+df.to_csv('week_11_linear_data.csv', index=False)
+# %%
+pd.read_csv('week_11_linear_data.csv')
+# %%
