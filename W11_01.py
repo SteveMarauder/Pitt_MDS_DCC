@@ -80,3 +80,53 @@ ax.set_ylabel('y')
 # show the plot
 plt.show()
 # %%
+## Generate random output data
+df = pd.DataFrame({'x':np.linspace(-3, 3, num=9)})
+df['trend'] = my_intercept + my_slope * df.x
+
+rg = np.random.default_rng(2100)
+df['y'] = rg.normal(loc=df.trend, scale = my_sigma, size=df.shape[0])
+df
+
+# %%
+## Visualize the randomly generated output around the TREND
+fig, ax = plt.subplots()
+# TRUE TREND
+ax.plot(df_viz.x, df_viz.trend, color='crimson', linewidth=1.5)
+# TRUE variation around the TREND - showing 2 intervals
+
+# 2 simga interval
+ax.fill_between(df_viz.x, df_viz.obs_lwr_95, df_viz.obs_upr_95, facecolor = 'crimson', alpha=0.35)
+## COLOR: face color
+## Transparency: alpha
+
+# 1 sigma interval
+ax.fill_between(df_viz.x, df_viz.obs_lwr_68, df_viz.obs_upr_68, facecolor='crimson', alpha=0.35)
+
+# include the randomly generated small data set as a scatter plot
+ax.scatter(df.x, df.y, color='k')
+
+# set labels
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+# show the plot
+plt.show()
+
+
+# %%
+df['true_intercept'] = my_intercept
+df['true_slope'] = my_slope
+df['true_sigma'] = my_sigma
+df
+# %%
+# Save the dataframe to a CSV file
+df.to_csv('week_11_linear_data.csv', index=False)
+# %%
+## When the folder is not we want.
+import os
+print("Current Working Directory:", os.getcwd())
+#%%
+## Let's start setting file directory
+os.chdir(r"C:\Users\steve\OneDrive\桌面\PittMDS_DCC")
+print("New Working Directory:", os.getcwd())
+# %%
