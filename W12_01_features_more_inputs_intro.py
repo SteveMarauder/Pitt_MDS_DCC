@@ -92,3 +92,73 @@ sns.relplot(data=study_wrt_x1_df,
             hue='x2', palette='coolwarm', estimator=None, units='x2')
 plt.show()
 # %%
+def calc_trend_wrt_x2(x1, x2, b0, b1, b2):
+    res_df = pd.DataFrame({'x2':x2})
+    res_df['x1'] = x1
+    res_df['trend'] = b0 + b1 * res_df.x1 + b2 * res_df.x2
+    return res_df
+# %%
+x2_values_b = np.linspace(-3,3,num=101)
+x2_values_b.shape
+
+# %%
+x1_values_b = np.linspace(-3,3,num=9)
+x1_values_b
+# %%
+b0 = -0.25
+b1 = 1.95
+b2 = 0.2
+
+study_wrt_x2_list = [calc_trend_wrt_x2(x1, x2_values_b, b0, b1, b2) for x1 in x1_values_b]
+len(study_wrt_x2_list)
+# %%
+study_wrt_x2_df = pd.concat(study_wrt_x2_list, ignore_index=True)
+study_wrt_x2_df
+# %%
+study_wrt_x2_df.x1.value_counts()
+# %%
+sns.relplot(data=study_wrt_x2_df,
+            x='x2', y='trend', kind='line',
+            hue='x1', palette='coolwarm',
+            estimator=None, units='x1')
+plt.show()
+# %%
+def calc_trend_wrt_x1_with_interaction(x1, x2, b0, b1, b2, b3):
+    res_df = pd.DataFrame({'x1':x1})
+    res_df['x2'] = x2
+    res_df['trend'] = b0 + b1 * res_df.x1 + b2 * res_df.x2 + b3 * res_df.x1 * res_df.x2
+    return res_df
+# %%
+b3 = 1
+# %%
+study_interaction_wrt_x1_list = [calc_trend_wrt_x1_with_interaction(x1_values, x2, b0, b1, b2, b3) for x2 in x2_values]
+len(study_interaction_wrt_x1_list)
+# %%
+study_interaction_wrt_x1_df = pd.concat(study_interaction_wrt_x1_list, ignore_index=True)
+study_interaction_wrt_x1_df
+# %%
+study_interaction_wrt_x1_df.x2.value_counts()
+# %%
+sns.relplot(data = study_interaction_wrt_x1_df,
+            x = 'x1', y = 'trend', kind='line',
+            hue = 'x2', palette='coolwarm',
+            estimator=None, units='x2')
+plt.show()
+# %%
+def calc_trend_wrt_x2_with_interaction(x1, x2, b0, b1, b2, b3):
+    res_df = pd.DataFrame({'x2': x2})
+    res_df['x1'] = x1
+    res_df['trend'] = b0 + b1 * res_df.x1 + b2 * res_df.x2 + b3 * res_df.x1 * res_df.x2
+    return res_df
+
+# %%
+study_interaction_wrt_x2_list = [calc_trend_wrt_x2_with_interaction(x1, x2_values_b, b0, b1, b2, b3) for x1 in x1_values_b]
+study_interaction_wrt_x2_df = pd.concat(study_interaction_wrt_x2_list, ignore_index = True)
+
+# %%
+sns.relplot(data=study_interaction_wrt_x2_df,
+            x='x2', y='trend', kind='line',
+            hue='x1', palette = 'coolwarm',
+            estimator=None, units='x1')
+plt.show()
+# %%
