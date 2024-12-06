@@ -51,3 +51,33 @@ ax.axvline(x=1, color='black', linestyle=':')
 sns.lineplot(data=dfviz, x='x', y='pred_probability', color='k')
 plt.show()
 # %%
+df_copy = df.copy()
+
+# %%
+df
+# %%
+df_copy['x_bin'] = pd.cut(df.x, [df.x.min(), -1, 1, df.x.max()], include_lowest=True, ordered=True)
+# %%
+df_copy.info()
+# %%
+df_copy.nunique()
+# %%
+df_copy.x_bin.value_counts()
+# %%
+sns.catplot(data=df_copy, x='x_bin', kind='count')
+plt.show()
+# %%
+df_copy.groupby('x_bin').\
+aggregate(num_rows = ('y', 'size'),
+          num_events = ('y', 'sum'),
+          prop_events = ('y', 'mean')).\
+reset_index()
+# %%
+df_copy.head()
+# %%
+df_copy.shape
+# %%
+df_copy['pred_probability'] = fit_glm.predict(df)
+# %%
+df_copy
+# %%
