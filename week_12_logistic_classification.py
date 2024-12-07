@@ -81,3 +81,18 @@ df_copy['pred_probability'] = fit_glm.predict(df)
 # %%
 df_copy
 # %%
+df_copy.pred_probability > 0.5
+# %%
+np.where(df_copy.pred_probability > 0.5, 1, 0)
+# %%
+df_copy
+# %%
+df_copy['pred_class'] = np.where(df_copy.pred_probability>0.5, 1, 0)
+# %%
+df_copy
+# %%
+df_copy.pred_class.value_counts()
+# %%
+sns.catplot(data=df_copy, x='pred_class', kind='count')
+plt.show()
+# %%
